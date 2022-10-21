@@ -5,13 +5,19 @@ using UnityEngine;
 public class NoteData : MonoBehaviour
 {
     private float timing;
+    private float endTiming;
     private int rane;
-    private NOTE_TYPE noteType = NOTE_TYPE.NomalNote;
+    private NOTE_TYPE noteType;
 
     public float Timing
     {
         get { return timing; }
         set { timing = value; }
+    }
+    public float EndTiming
+    {
+        get { return endTiming; }
+        set { endTiming = value; }
     }
     public NOTE_TYPE NoteType
     {

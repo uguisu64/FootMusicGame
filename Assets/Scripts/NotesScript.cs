@@ -7,9 +7,11 @@ public class NotesScript : MonoBehaviour
     public float speed;
 
     public GameObject nomalNote;
+    public GameObject holdNote;
     public GameObject guideLine;
 
     private List<NoteData> notes = new();
+    private List<NoteData> holdNotes = new();
 
     private CsvRead chartData;
 
@@ -60,11 +62,44 @@ public class NotesScript : MonoBehaviour
         return JUDGE_TYPE.none;
     }
 
+    public JUDGE_TYPE HoldCheckRane(int rane, float time, bool isKey)
+    {
+        int index = -1;
+        foreach(NoteData note in notes)
+        {
+            index++;
+            if(note.Rane == rane)
+            {
+                if(note.Timing <= time && time <= note.EndTiming)
+                {
+                    if(!isKey)
+                    {
+                        notes.RemoveAt(index);
+                        note.DestroyThisNote();
+                        return JUDGE_TYPE.miss;
+                    }
+                }
+                else if(note.Timing >= time)
+                {
+                    continue;
+                }
+                else if(note.EndTiming <= time)
+                {
+                    notes.RemoveAt(index);
+                    note.DestroyThisNote();
+                    return JUDGE_TYPE.perfect;
+                }
+            }
+        }
+        return JUDGE_TYPE.none;
+    }
+
     public int MissCheck(float time)
     {
         int count = 0;
         foreach(NoteData note in notes)
         {
+            if (note.NoteType == NOTE_TYPE.HoldNote) continue;
             if(time - note.Timing > 0.6f)
             {
                 note.DestroyThisNote();
@@ -83,24 +118,49 @@ public class NotesScript : MonoBehaviour
     {
         foreach(string[] note in chartData.csvData)
         {
-            GenerateNote(int.Parse(note[0]), int.Parse(note[1]), float.Parse(note[2]));
+            GenerateNote(note);
         }
     }
 
-    private void GenerateNote(int noteType, int rane, float timing)
+    private void GenerateNote(string[] noteData)
     {
+        int noteType = int.Parse(noteData[0]);
+        int rane = int.Parse(noteData[1]);
+        float timing = float.Parse(noteData[2]);
+
         float mergin = 2.0f;
         float positionY = speed * (mergin + timing) + guideLine.transform.position.y;
         float positionX = -3 + rane * 2;
+        NoteData nd;
+        GameObject note;
         switch (noteType)
         {
             case 0:
-                GameObject note = Instantiate(nomalNote, new Vector3(positionX, positionY, 0), Quaternion.identity, transform);
-                NoteData nd = note.GetComponent<NoteData>();
+                note = Instantiate(nomalNote, new Vector3(positionX, positionY, 0), Quaternion.identity, transform);
+                nd = note.GetComponent<NoteData>();
                 nd.Timing = timing;
                 nd.NoteType = NOTE_TYPE.NomalNote;
                 nd.Rane = rane;
                 notes.Add(nd);
+                break;
+
+            case 1:
+                float endTiming = float.Parse(noteData[3]);
+                float noteLength = endTiming - timing;
+                note = Instantiate(nomalNote, new Vector3(positionX, positionY, 0), Quaternion.identity, transform);
+                nd = note.GetComponent<NoteData>();
+                nd.Timing = timing;
+                nd.NoteType = NOTE_TYPE.NomalNote;
+                nd.Rane = rane;
+                notes.Add(nd);
+                note = Instantiate(holdNote, new Vector3(positionX, positionY + noteLength / 2 * speed, 0), Quaternion.identity, transform);
+                note.transform.localScale = new Vector3(20, noteLength * speed * 50, 1);
+                nd = note.GetComponent<NoteData>();
+                nd.Timing = timing;
+                nd.NoteType = NOTE_TYPE.HoldNote;
+                nd.Rane = rane;
+                nd.EndTiming = endTiming;
+                holdNotes.Add(nd);
                 break;
         }
     }
