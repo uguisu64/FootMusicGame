@@ -65,7 +65,7 @@ public class NotesScript : MonoBehaviour
     public JUDGE_TYPE HoldCheckRane(int rane, float time, bool isKey)
     {
         int index = -1;
-        foreach(NoteData note in notes)
+        foreach(NoteData note in holdNotes)
         {
             index++;
             if(note.Rane == rane)
@@ -74,7 +74,7 @@ public class NotesScript : MonoBehaviour
                 {
                     if(!isKey)
                     {
-                        notes.RemoveAt(index);
+                        holdNotes.RemoveAt(index);
                         note.DestroyThisNote();
                         return JUDGE_TYPE.miss;
                     }
@@ -85,7 +85,7 @@ public class NotesScript : MonoBehaviour
                 }
                 else if(note.EndTiming <= time)
                 {
-                    notes.RemoveAt(index);
+                    holdNotes.RemoveAt(index);
                     note.DestroyThisNote();
                     return JUDGE_TYPE.perfect;
                 }

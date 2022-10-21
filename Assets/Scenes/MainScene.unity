@@ -716,7 +716,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 0
   nomalNote: {fileID: 436168537824967423, guid: 1fb5128cd3171a241a832a700db83d50, type: 3}
-  holdNote: {fileID: 0}
+  holdNote: {fileID: 7041511371682175913, guid: 050f4463e40d88c44931d5ef3903cf34, type: 3}
   guideLine: {fileID: 73136506}
 --- !u!4 &1932990051
 Transform:
