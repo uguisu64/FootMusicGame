@@ -5,8 +5,11 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public GameObject notes;
+    public GameObject uiManager;
+    private int[] result = { 0, 0, 0, 0 };
     private float time;
     private NotesScript ns;
+    private UIManager uim;
     private AudioSource music;
     private bool[] keyUpFlgs = { false, false, false, false };
     private bool[] keyInputFlgs = { false, false, false, false };
@@ -14,6 +17,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         ns = notes.GetComponent<NotesScript>();
+        uim = uiManager.GetComponent<UIManager>();
         music = GetComponent<AudioSource>();
         time = -2.0f;
         StartCoroutine(StartMusic());
@@ -22,34 +26,42 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //現在時刻
         time += Time.deltaTime;
-        JUDGE_TYPE back = JUDGE_TYPE.none;
+        //毎フレームミスチェック
         ns.MissCheck(time);
+        //通常ノーツ処理用
         if (Input.GetKeyDown(KeyCode.S))
         {
-            back = ns.PressRane(0, time);
+            AddResult(ns.PressRane(0, time));
         }
         if (Input.GetKeyDown(KeyCode.F))
         {
-            back = ns.PressRane(1, time);
+            AddResult(ns.PressRane(1, time));
         }
         if (Input.GetKeyDown(KeyCode.J))
         {
-            back = ns.PressRane(2, time);
+            AddResult(ns.PressRane(2, time));
         }
         if (Input.GetKeyDown(KeyCode.L))
         {
-            back = ns.PressRane(3, time);
+            AddResult(ns.PressRane(3, time));
         }
 
         //HoldNote用の入力管理
         HoldKeyCheck();
         for (int i = 0; i < 4; i++)
         {
-            back = ns.HoldCheckRane(i, time, keyInputFlgs[i]);
-            Debug.Log(back);
+            AddResult(ns.HoldCheckRane(i, time, keyInputFlgs[i]));
         }
+    }
 
+    public void AddResult(JUDGE_TYPE judge)
+    {
+        if (judge == JUDGE_TYPE.none) return;
+
+        result[(int)judge] += 1;
+        uim.UpdateResultText(judge, result[(int)judge]);
     }
 
     public IEnumerator StartMusic()
