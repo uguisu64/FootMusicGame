@@ -5,6 +5,9 @@ using TMPro;
 
 public class UIManager : MonoBehaviour
 {
+    public TextMeshProUGUI titleText;
+    public TextMeshProUGUI difficultyText;
+
     public TextMeshProUGUI perfect;
     public TextMeshProUGUI good;
     public TextMeshProUGUI bad;
@@ -16,6 +19,12 @@ public class UIManager : MonoBehaviour
         UpdateResultText(JUDGE_TYPE.good, 0);
         UpdateResultText(JUDGE_TYPE.bad, 0);
         UpdateResultText(JUDGE_TYPE.miss, 0);
+    }
+
+    public void SetTitleLevelText(string title, string difficulty, string level)
+    {
+        titleText.text = title;
+        difficultyText.text = difficulty + " Lv." + level;
     }
 
     public void UpdateResultText(JUDGE_TYPE judge, int num)

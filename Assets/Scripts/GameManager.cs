@@ -13,12 +13,20 @@ public class GameManager : MonoBehaviour
     private AudioSource music;
     private bool[] keyUpFlgs = { false, false, false, false };
     private bool[] keyInputFlgs = { false, false, false, false };
-    // Start is called before the first frame update
+
+    private GameObject dataStore;
+    private DataStore ds;
+    
     void Start()
     {
         ns = notes.GetComponent<NotesScript>();
         uim = uiManager.GetComponent<UIManager>();
         music = GetComponent<AudioSource>();
+
+        dataStore = GameObject.Find("DataStore");
+        ds = dataStore.GetComponent<DataStore>();
+        SetMusicData(ds.SelectedMusicData());
+
         time = -2.0f;
         StartCoroutine(StartMusic());
     }
@@ -62,6 +70,13 @@ public class GameManager : MonoBehaviour
 
         result[(int)judge] += 1;
         uim.UpdateResultText(judge, result[(int)judge]);
+    }
+
+    public void SetMusicData(MusicData musicData)
+    {
+        uim.SetTitleLevelText(musicData.Title, musicData.Difficulty, musicData.Level);
+        ns.ReadChartData(musicData.ChartName);
+        music.clip = Resources.Load("Musics/" + musicData.MusicName) as AudioClip;
     }
 
     public IEnumerator StartMusic()

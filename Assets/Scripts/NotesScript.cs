@@ -18,13 +18,17 @@ public class NotesScript : MonoBehaviour
     void Start()
     {
         speed = 3.0f;
-        chartData = new CsvRead("CsvFiles/Charts/test");
-        GenerateAllNotes();
     }
 
     void Update()
     {
         transform.position += Vector3.down * Time.deltaTime * speed;
+    }
+
+    public void ReadChartData(string fileName)
+    {
+        chartData = new CsvRead("CsvFiles/Charts/" + fileName);
+        GenerateAllNotes();
     }
 
     public JUDGE_TYPE PressRane(int rane, float time)
