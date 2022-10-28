@@ -15,11 +15,6 @@ public class NotesScript : MonoBehaviour
 
     private CsvRead chartData;
 
-    void Start()
-    {
-        speed = 3.0f;
-    }
-
     void Update()
     {
         transform.position += Vector3.down * Time.deltaTime * speed;
@@ -27,6 +22,7 @@ public class NotesScript : MonoBehaviour
 
     public void ReadChartData(string fileName)
     {
+        speed = 3.0f;
         chartData = new CsvRead("CsvFiles/Charts/" + fileName);
         GenerateAllNotes();
     }

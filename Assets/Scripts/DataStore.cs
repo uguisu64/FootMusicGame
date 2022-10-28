@@ -23,7 +23,6 @@ public class DataStore : MonoBehaviour
         index = 0;
 
         musicData = new CsvRead("CsvFiles/musicData");
-        Debug.Log(musicData.csvData.Count);
     }
 
     public MusicData ChangeIndexReturnMusicData(int i)
