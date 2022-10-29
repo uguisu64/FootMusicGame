@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -56,6 +57,12 @@ public class GameManager : MonoBehaviour
             AddResult(ns.PressRane(3, time));
         }
 
+        //テスト用(強制リザルト遷移)
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            SaveResultLoadResultScene();
+        }
+
         //HoldNote用の入力管理
         HoldKeyCheck();
         for (int i = 0; i < 4; i++)
@@ -84,6 +91,12 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(2.0f);
 
         music.Play();
+    }
+
+    private void SaveResultLoadResultScene()
+    {
+        ds.Result = result;
+        SceneManager.LoadScene("ResultScene");
     }
 
     private void HoldKeyCheck()

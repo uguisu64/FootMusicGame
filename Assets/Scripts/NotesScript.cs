@@ -70,7 +70,7 @@ public class NotesScript : MonoBehaviour
             index++;
             if(note.Rane == rane)
             {
-                if(note.Timing <= time && time <= note.EndTiming)
+                if(note.Timing + 0.6f <= time && time <= note.EndTiming)
                 {
                     if(!isKey)
                     {
@@ -81,7 +81,7 @@ public class NotesScript : MonoBehaviour
                 }
                 else if(note.Timing >= time)
                 {
-                    continue;
+                    break;
                 }
                 else if(note.EndTiming <= time)
                 {

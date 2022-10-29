@@ -10,6 +10,9 @@ public class DataStore : MonoBehaviour
     private int index;
 
     private CsvRead musicData;
+
+    private int[] result;
+    public int[] Result { get { return result; } set { result = value; } }
     
     void Awake()
     {
