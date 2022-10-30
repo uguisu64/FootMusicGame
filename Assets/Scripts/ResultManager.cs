@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using TMPro;
 
 public class ResultManager : MonoBehaviour
@@ -23,6 +24,18 @@ public class ResultManager : MonoBehaviour
 
         SetMusicData(ds.SelectedMusicData());
         SetResultData(ds.Result);
+    }
+
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            SceneManager.LoadScene("MusicSelectScene");
+        }
+        if (Input.GetKeyDown(KeyCode.S))
+        {
+            SceneManager.LoadScene("MainScene");
+        }
     }
 
     private void SetMusicData(MusicData musicData)
