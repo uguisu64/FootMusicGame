@@ -39,7 +39,7 @@ public class GameManager : MonoBehaviour
         //現在時刻
         time += Time.deltaTime;
         //毎フレームミスチェック
-        ns.MissCheck(time);
+        addMiss(ns.MissCheck(time));
         //通常ノーツ処理用
         if (Input.GetKeyDown(KeyCode.S))
         {
@@ -105,6 +105,12 @@ public class GameManager : MonoBehaviour
     {
         ds.Result = result;
         SceneManager.LoadScene("ResultScene");
+    }
+
+    private void addMiss(int num)
+    {
+        result[(int)JUDGE_TYPE.miss] += num;
+        uim.UpdateResultText(JUDGE_TYPE.miss, result[(int)JUDGE_TYPE.miss]);
     }
 
     private void HoldKeyCheck()
