@@ -30,6 +30,7 @@ public class GameManager : MonoBehaviour
 
         time = -2.0f;
         StartCoroutine(StartMusic());
+        StartCoroutine(WaitSecondLoadResult(music.clip.length));
     }
 
     // Update is called once per frame
@@ -91,6 +92,13 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(2.0f);
 
         music.Play();
+    }
+
+    private IEnumerator WaitSecondLoadResult(float length)
+    {
+        yield return new WaitForSeconds(length + 2.5f + 2.0f);
+
+        SaveResultLoadResultScene();
     }
 
     private void SaveResultLoadResultScene()
