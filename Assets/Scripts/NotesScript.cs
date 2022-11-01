@@ -22,7 +22,7 @@ public class NotesScript : MonoBehaviour
 
     public void ReadChartData(string fileName)
     {
-        speed = 3.0f;
+        speed = 5.0f;
         chartData = new CsvRead("CsvFiles/Charts/" + fileName);
         GenerateAllNotes();
     }
