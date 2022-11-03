@@ -136,7 +136,7 @@ public class NotesScript : MonoBehaviour
         switch (noteType)
         {
             case 0:
-                note = Instantiate(nomalNote, new Vector3(positionX, positionY, 0), Quaternion.identity, transform);
+                note = Instantiate(nomalNote, new Vector3(positionX, positionY, -1), Quaternion.identity, transform);
                 nd = note.GetComponent<NoteData>();
                 nd.Timing = timing;
                 nd.NoteType = NOTE_TYPE.NomalNote;
@@ -147,7 +147,7 @@ public class NotesScript : MonoBehaviour
             case 1:
                 float endTiming = float.Parse(noteData[3]);
                 float noteLength = endTiming - timing;
-                note = Instantiate(nomalNote, new Vector3(positionX, positionY, 0), Quaternion.identity, transform);
+                note = Instantiate(nomalNote, new Vector3(positionX, positionY, -1), Quaternion.identity, transform);
                 nd = note.GetComponent<NoteData>();
                 nd.Timing = timing;
                 nd.NoteType = NOTE_TYPE.NomalNote;
