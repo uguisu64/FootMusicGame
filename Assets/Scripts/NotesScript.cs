@@ -33,16 +33,16 @@ public class NotesScript : MonoBehaviour
         foreach(NoteData note in notes)
         {
             index++;
-            if(Mathf.Abs(note.Timing - time) <= 0.6f && note.Rane == rane)
+            if(Mathf.Abs(note.Timing - time) <= 0.3f && note.Rane == rane)
             {
                 switch(Mathf.Abs(note.Timing - time))
                 {
-                    case float i when i <= 0.2f:
+                    case float i when i <= 0.1f:
                         notes.RemoveAt(index);
                         note.DestroyThisNote();
                         return JUDGE_TYPE.perfect;
 
-                    case float i when i <= 0.4f:
+                    case float i when i <= 0.2f:
                         notes.RemoveAt(index);
                         note.DestroyThisNote();
                         return JUDGE_TYPE.good;
@@ -54,7 +54,7 @@ public class NotesScript : MonoBehaviour
                 }
             }
 
-            if(note.Timing - time > 0.6f)
+            if(note.Timing - time > 0.3f)
             {
                 break;
             }
@@ -70,7 +70,7 @@ public class NotesScript : MonoBehaviour
             index++;
             if(note.Rane == rane)
             {
-                if(note.Timing + 0.6f <= time && time <= note.EndTiming)
+                if(note.Timing + 0.3f <= time && time <= note.EndTiming)
                 {
                     if(!isKey)
                     {
@@ -100,12 +100,12 @@ public class NotesScript : MonoBehaviour
         foreach(NoteData note in notes)
         {
             if (note.NoteType == NOTE_TYPE.HoldNote) continue;
-            if(time - note.Timing > 0.6f)
+            if(time - note.Timing > 0.3f)
             {
                 note.DestroyThisNote();
                 count++;
             }
-            if(note.Timing - time > 0.6f)
+            if(note.Timing - time > 0.3f)
             {
                 break;
             }
