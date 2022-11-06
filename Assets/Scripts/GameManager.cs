@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour
     public GameObject notes;
     public GameObject uiManager;
     private int[] result = { 0, 0, 0, 0 };
+    private int combo = 0;
     private float time;
     private NotesScript ns;
     private UIManager uim;
@@ -78,6 +79,17 @@ public class GameManager : MonoBehaviour
 
         result[(int)judge] += 1;
         uim.UpdateResultText(judge, result[(int)judge]);
+
+        if(judge == JUDGE_TYPE.miss)
+        {
+            combo = 0;
+            uim.SetComboText(combo);
+        }
+        else
+        {
+            combo++;
+            uim.SetComboText(combo);
+        }
     }
 
     public void SetMusicData(MusicData musicData)
@@ -111,6 +123,12 @@ public class GameManager : MonoBehaviour
     {
         result[(int)JUDGE_TYPE.miss] += num;
         uim.UpdateResultText(JUDGE_TYPE.miss, result[(int)JUDGE_TYPE.miss]);
+
+        if (num > 0)
+        {
+            combo = 0;
+            uim.SetComboText(combo);
+        }
     }
 
     private void HoldKeyCheck()
