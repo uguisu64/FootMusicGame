@@ -43,7 +43,7 @@ public class UIManager : MonoBehaviour
                 break;
 
             case JUDGE_TYPE.good:
-                good.text = "Goog: " + num.ToString();
+                good.text = "Good: " + num.ToString();
                 break;
 
             case JUDGE_TYPE.bad:
